@@ -1,6 +1,8 @@
 require 'sinatra/base'
 require 'sinatra'
 require './lib/player'
+require './lib/game'
+require './lib/computer'
 
 class Rps < Sinatra::Base
 
@@ -11,18 +13,31 @@ class Rps < Sinatra::Base
   end
 
   post '/names' do
-    $p1 = Player.new(params[:p1])
+    $game=Game.new(Player.new(params[:p1]),Computer.new)
+    redirect '/play'
+  end
+
+  post '/multiplayer' do
+    $game=Game.new(Player.new(params[:player1]),(Player.new(params[:player2]))
     redirect '/play'
   end
 
   get '/play' do
-    $p1
+    $game
     erb(:play)
   end
 
   post '/move' do
-    $p1.your_move(params[:p1_move])
-    redirect '/'
+    $game.player1.your_move(params[:p1_move])
+    if $game.player2.move == nil
+      redirect '/'
+    else
+      redirect '/result'
+  end
+
+  get '/result' do
+    @game = $game
+    erb(@game.choose_winner)
   end
 
   run! if app_file == $0
