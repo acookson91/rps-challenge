@@ -21,7 +21,8 @@ class Rps < Sinatra::Base
   end
 
   post '/move' do
-    $p1.move(params[:p1_move])
+    $p1.your_move(params[:p1_move])
+    redirect '/'
   end
 
   run! if app_file == $0
