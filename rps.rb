@@ -18,7 +18,7 @@ class Rps < Sinatra::Base
   end
 
   post '/multiplayer' do
-    $game=Game.new(Player.new(params[:player1]),(Player.new(params[:player2]))
+    $game=Game.new(Player.new(params[:player1]),Player.new(params[:player2]))
     redirect '/play'
   end
 
@@ -29,10 +29,12 @@ class Rps < Sinatra::Base
 
   post '/move' do
     $game.player1.your_move(params[:p1_move])
-    if $game.player2.move == nil
-      redirect '/'
+    $game.player2.your_move(params[:p2_move])
+    if $game.player2.name == 'computer' || $game.player2.move != nil
+      redirect 'result'
     else
-      redirect '/result'
+      redirect '/play'
+    end
   end
 
   get '/result' do

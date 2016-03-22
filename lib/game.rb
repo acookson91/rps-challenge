@@ -2,7 +2,7 @@ class Game
 
   attr_reader :player1, :player2
 
-  MOVE=[:Scissors, :Paper, :Rock]
+  MOVE=['Scissors', 'Paper', 'Rock']
 
   WINNER = {
     :Rock => :Paper,
@@ -16,7 +16,7 @@ class Game
   end
 
   def choose_winner
-    if WINNER[@player1.move.to_sym] == [@player2.move]
+    if WINNER[@player1.move] == [@player2.move]
       :loser
     else
       :winner

@@ -1,7 +1,13 @@
 Hey!
 
+  <% if $game.player1.move == nil %>
 <%= $game.player1.name %>
 
 <form action="/move" method="post">
-  <button type="submit" name="p1_move" value="Rock">Rock</button>
+<button type="submit" name="p1_move" value="Rock">Rock</button>
+  <% else %>
+  <%= $game.player2.name %>
+  <form action="/move" method="post">
+  <button type="submit" name="p2_move" value="Rock">Rock</button>
+  <% end %>
 </form>
